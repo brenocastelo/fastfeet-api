@@ -2,6 +2,8 @@ import Order from '../models/Order';
 import Recipient from '../models/Recipient';
 import DeliveryMan from '../models/DeliveryMan';
 
+import Mail from '../../lib/Mail';
+
 class OrderController {
   async store(req, res) {
     const { recipient_id, deliveryman_id } = req.body;
@@ -19,6 +21,12 @@ class OrderController {
     }
 
     const order = await Order.create(req.body);
+
+    await Mail.sendMail({
+      to: `${deliveryman.name} <${deliveryman.email}>`,
+      subject: 'Cadastro de encomenda',
+      text: `Você foi alocado para realizar a entraga de encomenda de ID ${order.id}`,
+    });
 
     return res.json(order);
   }
