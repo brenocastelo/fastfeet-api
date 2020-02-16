@@ -25,7 +25,12 @@ class OrderController {
     await Mail.sendMail({
       to: `${deliveryman.name} <${deliveryman.email}>`,
       subject: 'Cadastro de encomenda',
-      text: `Você foi alocado para realizar a entraga de encomenda de ID ${order.id}`,
+      template: 'order-creation',
+      context: {
+        deliveryman: deliveryman.name,
+        orderId: order.id,
+        recipient: recipient.name,
+      },
     });
 
     return res.json(order);
