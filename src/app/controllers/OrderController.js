@@ -28,7 +28,7 @@ class OrderController {
       template: 'order-creation',
       context: {
         deliveryman: deliveryman.name,
-        orderId: order.id,
+        product: order.product,
         recipient: recipient.name,
       },
     });
