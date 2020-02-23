@@ -11,6 +11,7 @@ import FileController from './app/controllers/FileController';
 import OrderController from './app/controllers/OrderController';
 import DeliveryStartController from './app/controllers/DeliveryStartController';
 import DeliveryEndController from './app/controllers/DeliveryEndController';
+import DeliveryProblemController from './app/controllers/DeliveryProblemController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -26,7 +27,12 @@ routes.get('/deliveryman/:id/delivereds', DeliveryEndController.index);
 routes.put('/orders/:id/checkin', DeliveryStartController.update);
 routes.put('/orders/:id/checkout', DeliveryEndController.update);
 
+routes.post('/orders/:id/problems', DeliveryProblemController.store);
+
 routes.use(authMiddleware);
+
+routes.delete('/problems/:id/cancel-orders', DeliveryProblemController.delete);
+routes.get('/orders/:id/problems', DeliveryProblemController.index);
 
 routes.post('/recipients', RecipientController.store);
 routes.put('/recipients/:id', RecipientController.update);
